@@ -47,7 +47,7 @@ public class LogManager {
 
 	private static void writeLog(Type type, String tag, String string){
 		getInstance();
-		Logger l=instance.hm.get(string);
+		Logger l=instance.hm.get(tag);
 		if(l==null){
 			throw new LogManager.LogerNotFound();
 		}else{
