@@ -28,7 +28,15 @@ public class LogManager {
 	/**
 	 * iner enum and exeptions
 	 */
-	public enum Type { ALL,INFO, WARNING, DEBUG, ERROR, CRITICAL };
+	public enum Type { INFO(0), DEBUG(1), WARN(2), ERROR(3), FATAL(4); 
+			private int value; 
+			private Type(int value) { 
+				this.value=value; 
+				}
+			public int getValue() {
+				return value;
+			}
+		};
 	public static class LogerNotFound extends RuntimeException{
 		private static final long serialVersionUID = 1L;
 		
@@ -39,7 +47,7 @@ public class LogManager {
 	private Map<String, Logger> hm = new HashMap<String,Logger>();
 
 	private static void writeLog(String tag, String string){
-		writeLog(Type.ALL, tag, string);
+		writeLog(Type.FATAL, tag, string);
 	}
 	
 	public static void writeLog(Type type, String tag, String string){

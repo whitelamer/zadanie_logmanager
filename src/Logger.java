@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -7,12 +8,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 //    @JsonSubTypes.Type(value = FileHandler.class, name = "FileHandler"),
 //})
 public class Logger {
-	private LogManager.Type type = LogManager.Type.ALL;
-	private Filter filter;
+	private LogManager.Type type = LogManager.Type.FATAL;
+	private Filter filter = null;
 	//@JacksonXmlProperty( localName = "FileHandler")
-	private Handler handler;
+	private Handler handler = null;
 	
-	private List<Logger> loggers;
+	private List<Logger> loggers = new ArrayList<Logger>();
 	public LogManager.Type getType() {
 		return type;
 	}
@@ -26,10 +27,16 @@ public class Logger {
 	}
 	public void log(LogManager.Type type, String string) {
 		// TODO Auto-generated method stub
-		if(type==LogManager.Type.ALL||type==this.type){
-			if(filter.filter_message(string))handler.writeMessage(string); //unrem after make filter and handler classes
+		if(type.getValue() >= this.type.getValue()&&handler!=null){
+			if(filter!=null){
+				if(filter.filter_message(string)){
+					handler.writeMessage(string);
+				}
+			}else{
+				handler.writeMessage(string);
+			}
 		}
-		if(loggers!=null&&!loggers.isEmpty())
+		//if(!loggers.isEmpty())
 		for (Logger log : loggers) {
 			log.log(type,string);
 		}
@@ -44,9 +51,17 @@ public class Logger {
 		return handler;
 	}
 	//@JacksonXmlProperty( localName = "FileHandler")
-	@JsonSetter("Handler")
+	@JsonSetter("handler")
 	public void setHandler(Handler handler) {
 		//System.out.println("Logger handler:"+handler);
 		this.handler = handler;
+	}
+	//public List<Logger> getLoggers() {
+	//	return loggers;
+	//}
+	@JsonSetter("logger")
+	public void setLogger(Logger logger) {
+		this.loggers.add(logger);
+		System.out.println("Logger loggers:"+this.loggers);
 	}
 }
