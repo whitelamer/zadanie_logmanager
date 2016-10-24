@@ -10,16 +10,9 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import com.sun.crypto.provider.HmacMD5;
 
 public class LogManager {
 	/**
@@ -35,7 +28,7 @@ public class LogManager {
 	/**
 	 * iner enum and exeptions
 	 */
-	public enum Type { INFO, WARNING, DEBUG, ERROR, CRITICAL };
+	public enum Type { ALL,INFO, WARNING, DEBUG, ERROR, CRITICAL };
 	public static class LogerNotFound extends RuntimeException{
 		private static final long serialVersionUID = 1L;
 		
@@ -45,7 +38,11 @@ public class LogManager {
 	 */
 	private Map<String, Logger> hm = new HashMap<String,Logger>();
 
-	private static void writeLog(Type type, String tag, String string){
+	private static void writeLog(String tag, String string){
+		writeLog(Type.ALL, tag, string);
+	}
+	
+	public static void writeLog(Type type, String tag, String string){
 		getInstance();
 		Logger l=instance.hm.get(tag);
 		if(l==null){
@@ -64,7 +61,9 @@ public class LogManager {
 			XMLInputFactory f = XMLInputFactory.newFactory();
 			Reader reader = new StringReader(xml);
 			XMLStreamReader sr = f.createXMLStreamReader(reader);
-			XmlMapper xmlMapper = new XmlMapper();		
+			XmlMapper xmlMapper = new XmlMapper();	
+			//xmlMapper.enableDefaultTyping(); // default to using DefaultTyping.OBJECT_AND_NON_CONCRETE
+			//xmlMapper.enableDefaultTyping();
 			sr.next();
 			instance.hm = xmlMapper.readValue(sr, new TypeReference<Map<String, Logger>>() { });
 			//instance.addLogger("Tag", value);
@@ -76,24 +75,10 @@ public class LogManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Hello World!!!");
-		loadFromXml("<LogManager>" +
-						"<fileloger type=\"DEBUG\"></fileloger>" +
-						"<baseloger type=\"INFO\"></baseloger>" +
-				    "</LogManager>");
 		
 		List<String> keys = new ArrayList<String>(instance.hm.keySet());
 	    for (String key : keys) {
 	    System.out.println(key + ": "+ (instance.hm.get(key)));
 	    }
-	    writeLog(LogManager.Type.DEBUG,"fileloger","Start write to file");
 	}
 }
