@@ -19,7 +19,9 @@ public class StartMain {
 								"<handler type=\"file\" filename=\"error.log\"/>" +
 							"</logger>"+
 						"</filelogger>" +
-						"<baselogger type=\"INFO\"></baselogger>" +
+						"<baselogger type=\"INFO\">" +
+							"<handler type=\"base\" basename=\"jdbc:postgresql://localhost:5432/testdb\" user=\"user\" password=\"1234\" insert=\"INSERT INTO LOGS (MESSAGE) VALUES ('%s');\"/>" +
+						"</baselogger>" +
 				    "</LogManager>");
 		//filename=\"1.log\"
 	    LogManager.writeLog(LogManager.Type.WARN,"filelogger","Start write to file");

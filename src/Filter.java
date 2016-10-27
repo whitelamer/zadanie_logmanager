@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class Filter {
 	private String regexp;
 	private boolean accepting;
-	Pattern p;
+	private Pattern p;
 	
 	public void setAccepting(boolean accepting) {
 		this.accepting = accepting;
