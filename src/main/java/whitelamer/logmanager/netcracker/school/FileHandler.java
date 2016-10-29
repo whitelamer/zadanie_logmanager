@@ -1,3 +1,4 @@
+package whitelamer.logmanager.netcracker.school;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,17 +27,12 @@ public class FileHandler implements Handler {
 //				file.renameTo(fileName+".1");
 //			}
 			FileOutputStream fop=new FileOutputStream(file,true);
-
 			fop.write(message.getBytes());
 			fop.write("\n".getBytes());
-
 			fop.flush();
 			fop.close();
 			
-
-
-			Files.write(Paths.get(fileName), message.getBytes(),
-					StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+			//Files.write(Paths.get(fileName), message.getBytes(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 		}catch (FileNotFoundException e) {
 			File file = new File(fileName);
 			try {

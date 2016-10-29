@@ -1,5 +1,7 @@
 
 
+import whitelamer.logmanager.netcracker.school.LogManager;
+
 public class StartMain {
 
 	/**

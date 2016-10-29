@@ -1,3 +1,4 @@
+package whitelamer.logmanager.netcracker.school;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 

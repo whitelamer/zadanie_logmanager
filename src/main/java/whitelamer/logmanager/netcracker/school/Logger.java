@@ -1,3 +1,4 @@
+package whitelamer.logmanager.netcracker.school;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +10,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 //})
 public class Logger {
 	private LogManager.Type type = LogManager.Type.FATAL;
-	private Filter filter = null;
-	//@JacksonXmlProperty( localName = "FileHandler")
-	private Handler handler = null;
+	private Filter filter;
+	private Handler handler;
 	
 	private List<Logger> loggers = new ArrayList<Logger>();
 	public LogManager.Type getType() {
@@ -27,7 +27,7 @@ public class Logger {
 	}
 	public void log(LogManager.Type type, String string) {
 		// TODO Auto-generated method stub
-		if(type.getValue() >= this.type.getValue()&&handler!=null){
+		if(this.type!=LogManager.Type.OFF && type.getValue() >= this.type.getValue() && handler!=null){
 			if(filter!=null){
 				if(filter.filter_message(string)){
 					handler.writeMessage(string);

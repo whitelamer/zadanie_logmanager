@@ -1,3 +1,5 @@
+package whitelamer.logmanager.netcracker.school;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -28,7 +30,7 @@ public class LogManager {
 	/**
 	 * iner enum and exeptions
 	 */
-	public enum Type { INFO(0), DEBUG(1), WARN(2), ERROR(3), FATAL(4); 
+	public enum Type { TRACE(0),DEBUG(1), INFO(2), WARN(3), ERROR(4), FATAL(5), ALL(6), OFF(7); 
 			private int value; 
 			private Type(int value) { 
 				this.value=value; 
