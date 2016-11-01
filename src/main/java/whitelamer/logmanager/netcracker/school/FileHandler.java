@@ -22,10 +22,13 @@ public class FileHandler implements Handler {
 		System.out.println("FileHandler recive:"+message);
 		try {
 			File file = new File(fileName);
+			if(!file.exists())file.createNewFile();
+			
 //			make log rotate
 //			if(file.length()>1000){
 //				file.renameTo(fileName+".1");
 //			}
+			
 			FileOutputStream fop=new FileOutputStream(file,true);
 			fop.write(message.getBytes());
 			fop.write("\n".getBytes());
@@ -33,14 +36,6 @@ public class FileHandler implements Handler {
 			fop.close();
 			
 			//Files.write(Paths.get(fileName), message.getBytes(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-		}catch (FileNotFoundException e) {
-			File file = new File(fileName);
-			try {
-				file.createNewFile();
-			} catch (IOException e1) {
-				return;
-			}
-			writeMessage(message);
 		} catch (IOException e) {
 			return;
 		}
