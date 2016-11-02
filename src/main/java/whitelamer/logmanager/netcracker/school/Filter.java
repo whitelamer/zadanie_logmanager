@@ -25,4 +25,12 @@ public class Filter {
 		if(m.matches())return accepting;
 		return !accepting;
 	}
+
+	@Override
+	public String toString() {
+		return "Filter{" +
+				"regexp='" + regexp + '\'' +
+				", accepting=" + accepting +
+				'}';
+	}
 }

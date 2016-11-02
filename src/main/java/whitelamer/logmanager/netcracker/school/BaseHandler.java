@@ -12,9 +12,11 @@ import java.sql.Statement;
 
 @JsonTypeName("BaseHandler")
 public class BaseHandler implements Handler {
+	/*!for debug
 	public BaseHandler() {
+
 		System.out.println("Create FileHandler");
-	}
+	}*/
 	@JacksonXmlProperty( localName = "basename")
 	private String baseName;
 	@JacksonXmlProperty( localName = "user")
@@ -25,7 +27,7 @@ public class BaseHandler implements Handler {
 	private String insert;
 	
 	public void writeMessage(String message) {
-		System.out.println("DataBaseHandler recive:"+message);
+		// for debugSystem.out.println("DataBaseHandler recive:"+message);
 		Connection c = null;
 	    Statement stmt = null;
 		try {
@@ -75,4 +77,11 @@ public class BaseHandler implements Handler {
 		this.insert = insert;
 	}
 
+	@Override
+	public String toString() {
+		return "BaseHandler{" +
+				"baseName='" + baseName + '\'' +
+				", userName='" + userName + '\'' +
+				'}';
+	}
 }
