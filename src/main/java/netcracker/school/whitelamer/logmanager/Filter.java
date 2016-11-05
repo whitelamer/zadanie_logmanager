@@ -1,4 +1,4 @@
-package whitelamer.logmanager.netcracker.school;
+package netcracker.school.whitelamer.logmanager;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

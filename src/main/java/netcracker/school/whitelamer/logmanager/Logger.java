@@ -1,9 +1,9 @@
-package whitelamer.logmanager.netcracker.school;
+package netcracker.school.whitelamer.logmanager;
+
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonSetter;
 
 //@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_ARRAY, property="handler")
 //@JsonSubTypes({

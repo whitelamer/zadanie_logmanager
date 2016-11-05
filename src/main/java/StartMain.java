@@ -1,6 +1,6 @@
 
 
-import whitelamer.logmanager.netcracker.school.LogManager;
+import netcracker.school.whitelamer.logmanager.LogManager;
 
 import javax.xml.stream.XMLStreamException;
 
