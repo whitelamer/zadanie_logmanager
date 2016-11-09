@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class Filter {
 	private String regexp;
 	private boolean accepting;
-	private Pattern p;
+	private Pattern pattern;
 	
 	public void setAccepting(boolean accepting) {
 		this.accepting = accepting;
@@ -18,10 +18,10 @@ public class Filter {
 
 	public void setRegexp(String regexp) {
 		this.regexp = regexp;
-		p = Pattern.compile(this.regexp);
+		pattern = Pattern.compile(this.regexp);
 	}
 	public boolean filter_message(String message) {
-		Matcher m = p.matcher(message);
+		Matcher m = pattern.matcher(message);
 		if(m.matches())return accepting;
 		return !accepting;
 	}

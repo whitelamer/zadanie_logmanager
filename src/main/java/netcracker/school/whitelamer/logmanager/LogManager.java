@@ -33,14 +33,16 @@ public class LogManager {
         return localInstance;
     }
 
-    private Map<String, Logger> hm = new HashMap<String, Logger>();
+    private Map<String, Logger> hashMap = new HashMap<String, Logger>();
+
     private void LogManager(){}
+
     private void writeLog(String tag, String string) {
         writeLog(LogType.FATAL, tag, string);
     }
 
     public void writeLog(LogType type, String tag, String string) {
-        Logger l = hm.get(tag);
+        Logger l = hashMap.get(tag);
         if (l == null) {
             throw new LogerNotFound();
         } else {
@@ -52,7 +54,7 @@ public class LogManager {
         getInstance();
         try (Reader reader = new StringReader(xml)){
             XmlMapper xmlMapper = new XmlMapper();
-            instance.hm = xmlMapper.readValue(reader, new TypeReference<Map<String, Logger>>() {
+            instance.hashMap = xmlMapper.readValue(reader, new TypeReference<Map<String, Logger>>() {
             });
         } catch (IOException e) {
             System.out.println("[LogManager] IOException:"+e.getLocalizedMessage());
