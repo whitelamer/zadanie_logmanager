@@ -1,7 +1,9 @@
-package netcracker.school.whitelamer.logmanager;
+package netcracker.school.whitelamer.logmanager.handlers;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import netcracker.school.whitelamer.logmanager.databases.DataBase;
+import netcracker.school.whitelamer.logmanager.databases.PosgresBase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,20 +27,11 @@ public class BaseHandler implements Handler {
 	
 	public void writeMessage(String message) {
 		// for debugSystem.out.println("DataBaseHandler recive:"+message);
-		Connection c = null;
-	    Statement stmt = null;
-		try {
- 			 Class.forName("org.postgresql.Driver");
-	         c = DriverManager.getConnection(baseName,userName, password);
-	         c.setAutoCommit(false);
-	         stmt = c.createStatement();
-	         String sql = String.format(insert, message);
-	         stmt.executeUpdate(sql);
-	         stmt.close();
-	         c.commit();
-	         c.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+		DataBase base=new PosgresBase();
+		if(base.connect(baseName,userName,password)){
+			String sql = String.format(insert, message);
+			base.insert(sql);
+			base.close();
 		}
 	}
 

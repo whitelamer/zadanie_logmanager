@@ -1,6 +1,7 @@
 
 
 import netcracker.school.whitelamer.logmanager.LogManager;
+import netcracker.school.whitelamer.logmanager.utils.LogType;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -29,7 +30,8 @@ public class StartMain {
                                 "<handler type=\"base\" basename=\"jdbc:postgresql://localhost:5432/testdb\" user=\"user\" password=\"1234\" insert=\"INSERT INTO LOGS (MESSAGE) VALUES ('%s');\"/>" +
                             "</baselogger>" +
                         "</LogManager>");
-			LogManager.writeLog(LogManager.Type.WARN,"filelogger","Start write to file");
+
+			LogManager.getInstance().writeLog(LogType.WARN,"filelogger","Start write to file");
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}

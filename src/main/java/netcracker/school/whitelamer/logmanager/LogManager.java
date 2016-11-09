@@ -2,10 +2,11 @@ package netcracker.school.whitelamer.logmanager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import netcracker.school.whitelamer.logmanager.exceptions.LogerNotFound;
+import netcracker.school.whitelamer.logmanager.utils.LogType;
+import netcracker.school.whitelamer.logmanager.utils.Logger;
 
-import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -16,52 +17,32 @@ public class LogManager {
     /**
      * instance
      */
-    private static LogManager instance;
 
-    private static synchronized LogManager getInstance() {
-        if (instance == null) {
-            instance = new LogManager();
+    private static volatile LogManager instance;
+
+    public static LogManager getInstance() {
+        LogManager localInstance = instance;
+        if (localInstance == null) {
+            synchronized (LogManager.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new LogManager();
+                }
+            }
         }
-        return instance;
+        return localInstance;
     }
 
-    /**
-     * iner enum and exeptions
-     */
-    public enum Type {
-        TRACE(0), DEBUG(1), INFO(2), WARN(3), ERROR(4), FATAL(5), ALL(6), OFF(7);
-        private int value;
-
-        private Type(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
-    ;
-
-    public static class LogerNotFound extends RuntimeException {
-        private static final long serialVersionUID = 1L;
-
-    }
-
-    /**
-     * iner HashMap
-     */
     private Map<String, Logger> hm = new HashMap<String, Logger>();
-
-    private static void writeLog(String tag, String string) {
-        writeLog(Type.FATAL, tag, string);
+    private void LogManager(){}
+    private void writeLog(String tag, String string) {
+        writeLog(LogType.FATAL, tag, string);
     }
 
-    public static void writeLog(Type type, String tag, String string) {
-        getInstance();
-        Logger l = instance.hm.get(tag);
+    public void writeLog(LogType type, String tag, String string) {
+        Logger l = hm.get(tag);
         if (l == null) {
-            throw new LogManager.LogerNotFound();
+            throw new LogerNotFound();
         } else {
             l.log(type, string);
         }
@@ -69,23 +50,12 @@ public class LogManager {
 
     public static void loadFromXml(String xml) throws XMLStreamException {
         getInstance();
-
-        try {
-            XMLInputFactory f = XMLInputFactory.newFactory();
-            Reader reader = new StringReader(xml);
-            XMLStreamReader sr = f.createXMLStreamReader(reader);
+        try (Reader reader = new StringReader(xml)){
             XmlMapper xmlMapper = new XmlMapper();
-            sr.next();
-            instance.hm = xmlMapper.readValue(sr, new TypeReference<Map<String, Logger>>() {
+            instance.hm = xmlMapper.readValue(reader, new TypeReference<Map<String, Logger>>() {
             });
-            sr.close();
-
         } catch (IOException e) {
+            System.out.println("[LogManager] IOException:"+e.getLocalizedMessage());
         }
-        /*!for debug
-		List<String> keys = new ArrayList<String>(instance.hm.keySet());
-	    for (String key : keys) {
-	    System.out.println(key + ": "+ (instance.hm.get(key)));
-	    }*/
     }
 }

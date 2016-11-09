@@ -1,26 +1,23 @@
-package netcracker.school.whitelamer.logmanager;
+package netcracker.school.whitelamer.logmanager.utils;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
+import netcracker.school.whitelamer.logmanager.handlers.Handler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_ARRAY, property="handler")
-//@JsonSubTypes({
-//    @JsonSubTypes.Type(value = FileHandler.class, name = "FileHandler"),
-//})
 public class Logger {
-    private LogManager.Type type = LogManager.Type.FATAL;
+    private LogType type = LogType.FATAL;
     private Filter filter;
     private Handler handler;
 
     private List<Logger> loggers = new ArrayList<Logger>();
 
-    public LogManager.Type getType() {
+    public LogType getType() {
         return type;
     }
 
-    public void setType(LogManager.Type type) {
+    public void setType(LogType type) {
         //System.out.println("Logger type:"+type);
         this.type = type;
     }
@@ -35,9 +32,9 @@ public class Logger {
                 '}';
     }
 
-    public void log(LogManager.Type type, String string) {
+    public void log(LogType type, String string) {
         // TODO Auto-generated method stub
-        if (this.type != LogManager.Type.OFF && type.getValue() >= this.type.getValue() && handler != null) {
+        if (this.type != LogType.OFF && type.getValue() >= this.type.getValue() && handler != null) {
             if (filter != null) {
                 if (filter.filter_message(string)) {
                     handler.writeMessage(string);
