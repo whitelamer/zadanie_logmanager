@@ -3,11 +3,7 @@ package netcracker.school.whitelamer.logmanager.handlers;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import netcracker.school.whitelamer.logmanager.databases.DataBase;
-import netcracker.school.whitelamer.logmanager.databases.PosgresBase;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import netcracker.school.whitelamer.logmanager.databases.PostgresQueryExecutor;
 
 @JsonTypeName("BaseHandler")
 public class BaseHandler implements Handler {
@@ -27,7 +23,7 @@ public class BaseHandler implements Handler {
 	
 	public void writeMessage(String message) {
 		// for debugSystem.out.println("DataBaseHandler recive:"+message);
-		DataBase base=new PosgresBase();
+		DataBase base=new PostgresQueryExecutor();
 		if(base.connect(baseName,userName,password)){
 			String sql = String.format(insert, message);
 			base.insert(sql);

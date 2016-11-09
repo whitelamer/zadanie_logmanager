@@ -1,0 +1,20 @@
+<LogManager>
+    <filelogger type="DEBUG">
+        <filter regexp=".*file" accepting="true"/>
+        <handler type="file" filename="1.log"/>
+        <logger type="WARN">
+            <handler type="file" filename="warn.log"/>
+        </logger>
+        <logger type="ERROR">
+            <handler type="file" filename="error.log"/>
+        </logger>
+    </filelogger>
+    <baselogger type="INFO">
+        <handler type="base">
+            <basename>jdbc:postgresql://localhost:5432/testdb</basename>
+            <user>user</user>
+            <password>1234</password>
+            <insert>INSERT INTO LOGS (MESSAGE) VALUES ('%s');</insert>
+        </handler>
+    </baselogger>
+</LogManager>

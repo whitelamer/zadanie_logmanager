@@ -7,10 +7,12 @@ import netcracker.school.whitelamer.logmanager.utils.LogType;
 import netcracker.school.whitelamer.logmanager.utils.Logger;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class LogManager {
@@ -33,12 +35,12 @@ public class LogManager {
         return localInstance;
     }
 
-    private Map<String, Logger> hashMap = new HashMap<String, Logger>();
+    private Map<String, Logger> hashMap = new HashMap<>();
 
     private void LogManager(){}
 
-    private void writeLog(String tag, String string) {
-        writeLog(LogType.FATAL, tag, string);
+    public void writeLog(String tag, String string) {
+        writeLog(LogType.ALL, tag, string);
     }
 
     public void writeLog(LogType type, String tag, String string) {
@@ -50,14 +52,24 @@ public class LogManager {
         }
     }
 
-    public static void loadFromXml(String xml) throws XMLStreamException {
-        getInstance();
+    public void loadFromXml(String xml) throws XMLStreamException {
         try (Reader reader = new StringReader(xml)){
-            XmlMapper xmlMapper = new XmlMapper();
-            instance.hashMap = xmlMapper.readValue(reader, new TypeReference<Map<String, Logger>>() {
-            });
+            parseFromReader(reader);
         } catch (IOException e) {
             System.out.println("[LogManager] IOException:"+e.getLocalizedMessage());
         }
+    }
+
+    public void loadFromFile(String file) throws XMLStreamException,IOException {
+        try (Reader reader = new FileReader(file)){
+            parseFromReader(reader);
+        }
+    }
+
+    private void parseFromReader(Reader reader) throws XMLStreamException,IOException {
+        XmlMapper xmlMapper = new XmlMapper();
+        hashMap = xmlMapper.readValue(reader, new TypeReference<Map<String, Logger>>() {
+        });
+        //System.out.println("LogManager loaded:" + hashMap.toString());
     }
 }

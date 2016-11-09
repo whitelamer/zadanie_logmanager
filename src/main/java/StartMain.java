@@ -4,38 +4,23 @@ import netcracker.school.whitelamer.logmanager.LogManager;
 import netcracker.school.whitelamer.logmanager.utils.LogType;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 
 public class StartMain {
+	public static LogManager logger=LogManager.getInstance();
 
-	/**
-	 * @param args
-	 */
+
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Hello World!!!");
-
 		try {
-			LogManager.loadFromXml("<LogManager>" +
-                            "<filelogger type=\"DEBUG\">" +
-                                "<filter regexp=\".*file\" accepting=\"true\"/>" +
-                                "<handler type=\"file\" filename=\"1.log\"/>" +
-                                "<logger type=\"WARN\">" +
-                                    "<handler type=\"file\" filename=\"warn.log\"/>" +
-                                "</logger>"+
-                                "<logger type=\"ERROR\">" +
-                                    "<handler type=\"file\" filename=\"error.log\"/>" +
-                                "</logger>"+
-                            "</filelogger>" +
-                            "<baselogger type=\"INFO\">" +
-                                "<handler type=\"base\" basename=\"jdbc:postgresql://localhost:5432/testdb\" user=\"user\" password=\"1234\" insert=\"INSERT INTO LOGS (MESSAGE) VALUES ('%s');\"/>" +
-                            "</baselogger>" +
-                        "</LogManager>");
+			logger.loadFromFile("./resources/LogManager.xml");//настраиваем менеджер
 
-			LogManager.getInstance().writeLog(LogType.WARN,"filelogger","Start write to file");
+			logger.writeLog(LogType.WARN,"filelogger","Start write to file");//пишем сообщение в логера с именем filelogger
+
 		} catch (XMLStreamException e) {
-			e.printStackTrace();
+			System.out.println("[StartLogManager] Error in xml:"+e.getLocalizedMessage());
+		} catch (IOException e) {
+			System.out.println("[StartLogManager] Error file read:"+e.getLocalizedMessage());
 		}
-		//filename=\"1.log\"
 	}
 
 }

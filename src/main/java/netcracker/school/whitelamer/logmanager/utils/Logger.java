@@ -11,7 +11,7 @@ public class Logger {
     private Filter filter;
     private Handler handler;
 
-    private List<Logger> loggers = new ArrayList<Logger>();
+    private List<Logger> loggers = new ArrayList<>();
 
     public LogType getType() {
         return type;
@@ -74,6 +74,5 @@ public class Logger {
     @JsonSetter("logger")
     public void setLogger(Logger logger) {
         this.loggers.add(logger);
-        System.out.println("Logger loggers:" + this.loggers);
     }
 }
