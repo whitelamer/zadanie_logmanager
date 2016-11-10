@@ -35,7 +35,7 @@ public class LogManager {
         return localInstance;
     }
 
-    private Map<String, Logger> hashMap = new HashMap<>();
+    private Map<String, Logger> cacheOfLoggers = new HashMap<>();
 
     private void LogManager(){}
 
@@ -44,7 +44,7 @@ public class LogManager {
     }
 
     public void writeLog(LogType type, String tag, String string) {
-        Logger l = hashMap.get(tag);
+        Logger l = cacheOfLoggers.get(tag);
         if (l == null) {
             throw new LogerNotFound();
         } else {
@@ -68,7 +68,7 @@ public class LogManager {
 
     private void parseFromReader(Reader reader) throws XMLStreamException,IOException {
         XmlMapper xmlMapper = new XmlMapper();
-        hashMap = xmlMapper.readValue(reader, new TypeReference<Map<String, Logger>>() {
+        cacheOfLoggers = xmlMapper.readValue(reader, new TypeReference<Map<String, Logger>>() {
         });
         //System.out.println("LogManager loaded:" + hashMap.toString());
     }
