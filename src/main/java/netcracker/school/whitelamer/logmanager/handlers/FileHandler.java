@@ -15,19 +15,11 @@ public class FileHandler implements Handler {
 	@JacksonXmlProperty( localName = "filename")
 	private String fileName;
 	public void writeMessage(String message) {
-		try {
-			File file = new File(fileName);
-			if (!file.exists()) file.createNewFile();
-		}catch (IOException e) {
-			System.out.println("[LogManager] writeMessage:"+e.getLocalizedMessage());
-		}
-
 		try (PrintWriter stream = new PrintWriter(new FileOutputStream(fileName,true))){
             stream.println(message);
 		} catch (IOException e) {
-			System.out.println("[LogManager] writeMessage:"+e.getLocalizedMessage());
+			System.err.println("[LogManager] writeMessage error while write file {"+fileName+"}:"+e.getLocalizedMessage());
 		}
-
 	}
 	public String getFileName() {
 		return fileName;

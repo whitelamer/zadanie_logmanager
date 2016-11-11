@@ -36,7 +36,7 @@ public class Logger {
         // TODO Auto-generated method stub
         if (this.type != LogType.OFF && type.getValue() >= this.type.getValue() && handler != null) {
             if (filter != null) {
-                if (filter.filter_message(string)) {
+                if (filter.filterMessage(string)) {
                     handler.writeMessage(string);
                 }
             } else {

@@ -20,7 +20,7 @@ public class Filter {
 		this.regexp = regexp;
 		pattern = Pattern.compile(this.regexp);
 	}
-	public boolean filter_message(String message) {
+	public boolean filterMessage(String message) {
 		Matcher m = pattern.matcher(message);
 		if(m.matches())return accepting;
 		return !accepting;

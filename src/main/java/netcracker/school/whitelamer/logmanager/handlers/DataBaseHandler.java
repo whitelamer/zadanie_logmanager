@@ -2,16 +2,11 @@ package netcracker.school.whitelamer.logmanager.handlers;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import netcracker.school.whitelamer.logmanager.databases.DataBase;
-import netcracker.school.whitelamer.logmanager.databases.PostgresQueryExecutor;
+import netcracker.school.whitelamer.logmanager.databasequerys.DataBaseQueryExecutor;
+import netcracker.school.whitelamer.logmanager.databasequerys.PostgresQueryExecutor;
 
-@JsonTypeName("BaseHandler")
-public class BaseHandler implements Handler {
-	/*!for debug
-	public BaseHandler() {
-
-		System.out.println("Create FileHandler");
-	}*/
+@JsonTypeName("DataBaseHandler")
+public class DataBaseHandler implements Handler {
 	@JacksonXmlProperty( localName = "basename")
 	private String baseName;
 	@JacksonXmlProperty( localName = "user")
@@ -23,12 +18,15 @@ public class BaseHandler implements Handler {
 	
 	public void writeMessage(String message) {
 		// for debugSystem.out.println("DataBaseHandler recive:"+message);
-		DataBase base=new PostgresQueryExecutor();
-		if(base.connect(baseName,userName,password)){
-			String sql = String.format(insert, message);
-			base.insert(sql);
-			base.close();
-		}
+        DataBaseQueryExecutor base;
+        if(baseName==null||!baseName.contains("postgresql")) {
+            System.err.println("[LogManager] writeMessage error database not support");
+            return;
+        }else{
+            base = new PostgresQueryExecutor();
+        }
+        String sql = String.format(insert, message);
+        base.executeQuery(baseName,userName,password,sql);
 	}
 
 	public String getBaseName() {
