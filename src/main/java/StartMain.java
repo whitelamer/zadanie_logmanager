@@ -1,10 +1,7 @@
 
 
 import netcracker.school.whitelamer.logmanager.LogManager;
-import netcracker.school.whitelamer.logmanager.utils.LogType;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
+import netcracker.school.whitelamer.logmanager.LogType;
 
 public class StartMain {
 	final static LogManager logger=LogManager.getInstance();

@@ -3,8 +3,6 @@ package netcracker.school.whitelamer.logmanager;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import netcracker.school.whitelamer.logmanager.exceptions.LogerNotFoundException;
-import netcracker.school.whitelamer.logmanager.utils.LogType;
-import netcracker.school.whitelamer.logmanager.utils.Logger;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileReader;
@@ -12,7 +10,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class LogManager {

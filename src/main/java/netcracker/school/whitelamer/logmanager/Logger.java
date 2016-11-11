@@ -1,4 +1,4 @@
-package netcracker.school.whitelamer.logmanager.utils;
+package netcracker.school.whitelamer.logmanager;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import netcracker.school.whitelamer.logmanager.handlers.Handler;
