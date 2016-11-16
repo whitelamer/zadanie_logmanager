@@ -4,7 +4,7 @@ import netcracker.school.whitelamer.logmanager.LogManager;
 import netcracker.school.whitelamer.logmanager.LogType;
 
 public class StartMain {
-	final static LogManager logger=LogManager.getInstance();
+	private final static LogManager logger=LogManager.getInstance();
 
 
 	public static void main(String[] args) {

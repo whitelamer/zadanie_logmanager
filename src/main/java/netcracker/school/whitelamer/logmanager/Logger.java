@@ -6,7 +6,7 @@ import netcracker.school.whitelamer.logmanager.handlers.Handler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Logger {
+class Logger {
     private LogType type = LogType.FATAL;
     private Filter filter;
     private Handler handler;
@@ -18,7 +18,6 @@ public class Logger {
     }
 
     public void setType(LogType type) {
-        //System.out.println("Logger type:"+type);
         this.type = type;
     }
 

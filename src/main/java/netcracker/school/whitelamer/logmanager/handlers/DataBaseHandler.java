@@ -3,7 +3,6 @@ package netcracker.school.whitelamer.logmanager.handlers;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import netcracker.school.whitelamer.logmanager.databasequerys.DataBaseQueryExecutor;
-import netcracker.school.whitelamer.logmanager.databasequerys.PostgresQueryExecutor;
 
 @JsonTypeName("DataBaseHandler")
 public class DataBaseHandler implements Handler {
@@ -17,14 +16,7 @@ public class DataBaseHandler implements Handler {
 	private String insert;
 	
 	public void writeMessage(String message) {
-		// for debugSystem.out.println("DataBaseHandler recive:"+message);
-        DataBaseQueryExecutor base;
-        if(baseName==null||!baseName.contains("postgresql")) {
-            System.err.println("[LogManager] writeMessage error database not support");
-            return;
-        }else{
-            base = new PostgresQueryExecutor();
-        }
+        DataBaseQueryExecutor base = new DataBaseQueryExecutor();
         String sql = String.format(insert, message);
         base.executeQuery(baseName,userName,password,sql);
 	}

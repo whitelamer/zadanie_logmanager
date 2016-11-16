@@ -2,7 +2,7 @@ package netcracker.school.whitelamer.logmanager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import netcracker.school.whitelamer.logmanager.exceptions.LogerNotFoundException;
+import netcracker.school.whitelamer.logmanager.exceptions.LoggerNotFoundException;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileReader;
@@ -34,16 +34,16 @@ public class LogManager {
 
     private Map<String, Logger> cacheOfLoggers = new HashMap<>();
 
-    private void LogManager(){}
+    private LogManager(){}
 
-    public void allLog(String tag, String string) {
+    public void logAll(String tag, String string) {
         writeLog(LogType.ALL, tag, string);
     }
 
     public void writeLog(LogType type, String tag, String string) {
         Logger l = cacheOfLoggers.get(tag);
         if (l == null) {
-            throw new LogerNotFoundException();
+            throw new LoggerNotFoundException("logger "+tag+" not found");
         } else {
             l.log(type, string);
         }
