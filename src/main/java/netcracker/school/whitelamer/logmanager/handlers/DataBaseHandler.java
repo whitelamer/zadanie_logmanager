@@ -2,7 +2,7 @@ package netcracker.school.whitelamer.logmanager.handlers;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import netcracker.school.whitelamer.logmanager.databasequerys.DataBaseQueryExecutor;
+import netcracker.school.whitelamer.logmanager.queries.DataBaseQueryExecutor;
 
 @JsonTypeName("DataBaseHandler")
 public class DataBaseHandler implements Handler {

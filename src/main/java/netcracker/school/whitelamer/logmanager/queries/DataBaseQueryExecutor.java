@@ -1,4 +1,4 @@
-package netcracker.school.whitelamer.logmanager.databasequerys;
+package netcracker.school.whitelamer.logmanager.queries;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,11 +17,7 @@ public class DataBaseQueryExecutor {
         }
         try (Connection tmp= DriverManager.getConnection(baseName,user, password);Statement stmt = tmp.createStatement()){
             tmp.setAutoCommit(true);
-            try {
-                stmt.executeUpdate(query);
-            } catch (SQLException e) {
-                System.err.println("[LogManager] writeMessage error execute query {"+query+"}:"+e.getLocalizedMessage());
-            }
+            stmt.executeUpdate(query);
         } catch (SQLException e) {
             System.err.println("[LogManager] writeMessage error execute query:"+e.getLocalizedMessage());
         }
